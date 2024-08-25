@@ -1,0 +1,41 @@
+/* assets/styles.css */
+body {
+    background-color: black;
+    color: white;
+}
+
+h1 {
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.dropdown {
+    margin-bottom: 20px; /* Space below the dropdown */
+}
+
+.dash-dropdown {
+    margin-bottom: 20px; /* Space below the dropdown */
+}
+
+.Select-menu-outer {
+    background-color: white; /* Dropdown menu background */
+}
+
+.Select-placeholder {
+    color: black; /* Placeholder text color */
+}
+
+.Select-control {
+    background-color: white; /* Background of the dropdown control */
+}
+
+.Select-control .Select-value {
+    color: black; /* Text color of the selected value */
+}
+
+.Select-menu {
+    background-color: white; /* Background color of dropdown items */
+}
+
+.Select-item {
+    color: black; /* Text color of dropdown items */
+}
