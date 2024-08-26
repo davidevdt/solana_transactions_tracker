@@ -6,4 +6,4 @@ venv/
 env/
 *.log
 *.tmp
-./data/chain.csv
+data/chain.csv
