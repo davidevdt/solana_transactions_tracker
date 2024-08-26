@@ -1,0 +1,5 @@
+Min_Slot_Timestamp,Max_Slot_Number,Type_CancelOrder,Type_ComputeBudget,Type_System,Type_Transaction,Type_Unknown,Type_Vote,Success_CancelOrder,Success_ComputeBudget,Success_System,Success_Transaction,Success_Unknown,Success_Vote,Failed_CancelOrder,Failed_ComputeBudget,Failed_System,Failed_Transaction,Failed_Unknown,Failed_Vote,Status_Failed,Status_Success,Total
+2024-08-26 14:21:22,285961231,1,626,1,105,9,3324,1,440,1,90,9,3324,0,186,0,15,0,0,201,3865,4066
+2024-08-26 15:35:02,285971230,0,476,1,102,5,2081,0,332,1,100,5,2081,0,144,0,2,0,0,146,2519,2665
+2024-08-26 16:49:40,285981231,5,495,3,13,10,4010,5,279,3,10,10,4010,0,216,0,3,0,0,219,4317,4536
+2024-08-26 18:07:52,285991235,0,1517,0,251,20,5394,0,572,0,245,20,5394,0,945,0,6,0,0,951,6231,7182

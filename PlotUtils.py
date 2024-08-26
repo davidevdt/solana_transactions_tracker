@@ -1,14 +1,51 @@
 import plotly.express as px
 import pandas as pd 
+import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
 class PlotUtils: 
+    """
+    A utility class for generating various plots related to Solana transactions.
+    
+    Methods
+    -------
+    variables_type_to_colors(variables_type):
+        Maps a type of variable to corresponding colors for plotting.
+    variables_types_to_column_names(variables_type):
+        Maps a type of variable to a list of column names in the DataFrame.
+    simplify_types(df):
+        Simplifies the DataFrame by consolidating category columns into an 'Other' category.
+    plot_line_chart(df, variables_type, include_total=True, colors=None, title=None, fig_size=(12,6), simplify_types=False):
+        Plots a stacked line chart using the provided DataFrame and variables type.
+    plot_bar_chart(df, variables_type, colors=None, title=None, fig_size=(12,6), simplify_types=False):
+        Plots a stacked bar chart using the provided DataFrame and variables type.
+    bar_chart_dash(df, variables_type, include_total, title, simplify_types=False):
+        Generates a Plotly bar chart suitable for use in Dash applications.
+    empty_figure():
+        Creates an empty figure with a black background for use as a placeholder.
+    """
     
     def __init__(self):
+        """
+        Initializes the PlotUtils instance.
+        """
         pass 
 
     @staticmethod 
     def variables_type_to_colors(variables_type):
+        """
+        Maps a type of variable to corresponding colors for plotting.
 
+        Parameters:
+        -----------
+        variables_type : str
+            The type of variable to map. Options include 'status', 'type', 'success_type', 'failed_type', and 'status_type'.
+
+        Returns:
+        --------
+        dict
+            A dictionary mapping variable types to colors.
+        """
         match variables_type.lower(): 
             case 'status':
                 keys = ['Status_Failed', 'Status_Success', 'Total'] 
@@ -44,7 +81,19 @@ class PlotUtils:
 
     @staticmethod 
     def variables_types_to_column_names(variables_type):
+        """
+        Maps a type of variable to a list of column names in the DataFrame.
 
+        Parameters:
+        -----------
+        variables_type : str
+            The type of variable to map. Options include 'status', 'type', 'success_type', 'failed_type', and 'status_type'.
+
+        Returns:
+        --------
+        list
+            A list of column names corresponding to the variable type.
+        """
         match variables_type.lower(): 
             case 'status':
                 cols = ['Status_Failed', 'Status_Success'] 
@@ -72,6 +121,19 @@ class PlotUtils:
 
     @staticmethod
     def simplify_types(df): 
+        """
+        Simplifies the DataFrame by consolidating category columns into an 'Other' category.
+
+        Parameters:
+        -----------
+        df : pd.DataFrame
+            The DataFrame to be simplified.
+
+        Returns:
+        --------
+        pd.DataFrame
+            The simplified DataFrame.
+        """
         categories_to_simplify = ['ComputeBudget', 'Unknown', 'CancelOrder', 'System'] 
         for prefix in ['Failed_', 'Success_', 'Type_']:
             if prefix + 'Other' not in df.columns:
@@ -84,9 +146,32 @@ class PlotUtils:
 
     @staticmethod
     def plot_line_chart(df, variables_type, include_total=True, colors=None, title=None, fig_size=(12,6), simplify_types=False): 
+        """
+        Plots a stacked line chart using the provided DataFrame and variables type.
 
+        Parameters:
+        -----------
+        df : pd.DataFrame
+            The DataFrame containing the data to plot.
+        variables_type : str
+            The type of variable to plot. Options include 'status', 'type', 'success_type', 'failed_type', 'status_type', and 'success_failed'.
+        include_total : bool, optional
+            If True, includes a 'Total' line in the chart. Defaults to True.
+        colors : dict, optional
+            A dictionary mapping variable names to colors. If None, uses default colors.
+        title : str, optional
+            The title of the chart. If None, a default title is used.
+        fig_size : tuple, optional
+            The size of the figure. Defaults to (12,6).
+        simplify_types : bool, optional
+            If True, simplifies the DataFrame before plotting. Defaults to False.
+
+        Returns:
+        --------
+        None
+        """
         if variables_type.lower() == 'type_status':
-            variables_type == 'status_type'
+            variables_type = 'status_type'
 
         if variables_type.lower() not in ['status', 'type', 'success_type', 'failed_type', 'status_type', 'success_failed']:
             raise ValueError('Variables type: one of "status", "type", "success_type", "failed_type", or "status_type".')
@@ -123,15 +208,35 @@ class PlotUtils:
         ax.set_ylabel('Count')
         ax.set_title(title)
         ax.legend(legend_names)
-        # ax.legend(loc='upper left')
         plt.show()
         return
 
     @staticmethod
     def plot_bar_chart(df, variables_type, colors=None, title=None, fig_size=(12,6), simplify_types=False): 
+        """
+        Plots a stacked bar chart using the provided DataFrame and variables type.
 
+        Parameters:
+        -----------
+        df : pd.DataFrame
+            The DataFrame containing the data to plot.
+        variables_type : str
+            The type of variable to plot. Options include 'status', 'type', 'success_type', 'failed_type', 'status_type', and 'success_failed'.
+        colors : dict, optional
+            A dictionary mapping variable names to colors. If None, uses default colors.
+        title : str, optional
+            The title of the chart. If None, a default title is used.
+        fig_size : tuple, optional
+            The size of the figure. Defaults to (12,6).
+        simplify_types : bool, optional
+            If True, simplifies the DataFrame before plotting. Defaults to False.
+
+        Returns:
+        --------
+        None
+        """
         if variables_type.lower() == 'type_status':
-            variables_type == 'status_type'
+            variables_type = 'status_type'
 
         if variables_type.lower() not in ['status', 'type', 'success_type', 'failed_type', 'status_type', 'success_failed']:
             raise ValueError('Variables type: one of "status", "type", "success_type", "failed_type", or "status_type".')
@@ -156,15 +261,34 @@ class PlotUtils:
         ax.set_ylabel('Count')
         ax.set_title(title)
         ax.legend([c.split('_')[1] for c in df_plot.columns])
-        # ax.legend(loc='upper left')
         plt.show()
         return
 
     @staticmethod
     def bar_chart_dash(df, variables_type, include_total, title, simplify_types=False):
+        """
+        Generates a Plotly bar chart suitable for use in Dash applications.
 
+        Parameters:
+        -----------
+        df : pd.DataFrame
+            The DataFrame containing the data to plot.
+        variables_type : str
+            The type of variable to plot. Options include 'status', 'type', 'success_type', 'failed_type', 'status_type', and 'success_failed'.
+        include_total : bool
+            If True, includes a 'Total' column in the chart.
+        title : str
+            The title of the chart.
+        simplify_types : bool, optional
+            If True, simplifies the DataFrame before plotting. Defaults to False.
+
+        Returns:
+        --------
+        plotly.graph_objects.Figure
+            A Plotly figure object for the bar chart.
+        """
         if variables_type.lower() == 'type_status':
-            variables_type == 'status_type'
+            variables_type = 'status_type'
 
         if variables_type.lower() not in ['status', 'type', 'success_type', 'failed_type', 'status_type', 'success_failed']:
             raise ValueError('Variables type: one of "status", "type", "success_type", "failed_type", or "status_type".')
@@ -236,4 +360,32 @@ class PlotUtils:
             legend_font_color='white',  
         )
         
+        return fig
+
+    @staticmethod
+    def empty_figure():
+        """
+        Creates an empty figure with a black background for use as a placeholder.
+
+        Returns:
+        --------
+        plotly.graph_objects.Figure
+            An empty Plotly figure with a black background.
+        """
+        fig = go.Figure()
+        fig.update_layout(
+            paper_bgcolor='black', 
+            plot_bgcolor='black',  
+            font=dict(color='black'),  
+            xaxis=dict(
+                color='black', 
+                showgrid=False, 
+                zeroline=False  
+            ),
+            yaxis=dict(
+                color='black',  
+                showgrid=False, 
+                zeroline=False  
+            )
+        )
         return fig
