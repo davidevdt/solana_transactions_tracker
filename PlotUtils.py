@@ -345,7 +345,7 @@ class PlotUtils:
                 tickfont=dict(family='Arial', size=14, color='white'),  
                 title_font=dict(family='Arial', size=18, color='white'),  
                 tickvals=df[x_col],
-                tickangle = 0, 
+                tickangle = -45, 
             ),
             yaxis=dict(
                 title='Count',
